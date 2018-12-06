@@ -16,10 +16,49 @@ library(tidyverse)
 
 
 Part 1 Creating A Statistical Model
-```{r sample random number generator}
+```{r sample random number generator, include=FALSE}
 
 x <- rnorm(1000, mean = 0, sd = 1) %>%
   as.data.frame()
+
+```
+
+```{r}
+#Creating a sample of tide ranges
+
+tide_range <- rnorm(10000, mean = 2.5, sd = 3) %>%
+  as.data.frame
+
+colnames(tide_range) <- c("tide_range")
+#Creating a random set of numbers for tide ranges around a mean of 2.5 and a sd of 3
+
+
+```
+
+```{r}
+#inital data exploration
+
+tide_range_hist <- ggplot(tide_range, aes(x=tide_range)) +
+  geom_histogram(bins=43, fill = "blue", color="black") +
+  theme_classic()
+tide_range_hist #creating a histogram to view normal distribution of tide range
+
+tide_range_qq <- ggplot(tide_range, aes(sample=tide_range)) +
+  geom_qq()
+tide_range_qq #creating a qq plot to view normal distribution of tide range
+
+```
+
+
+```{r}
+# Counting the amount of floods and proportion
+
+tide_range_flood <- tide_range %>%
+  mutate(Flood = ifelse(tide_range > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+Flood_Prop <- round(prop.table(as.matrix(tide_range_flood), 1), 3)
 
 ```
 
