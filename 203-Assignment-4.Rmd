@@ -1,0 +1,25 @@
+---
+title: "ESM 203 Assignment 4"
+author: "Robert Saldivar"
+date: "December 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Part 0 Load Packages
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+
+Part 1 Creating A Statistical Model
+```{r sample random number generator}
+
+x <- rnorm(1000, mean = 0, sd = 1) %>%
+  as.data.frame()
+
+```
+
