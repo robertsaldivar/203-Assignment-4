@@ -9,9 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Part 0 Load Packages
+Part 0 Load Packages and read in data
 ```{r, include=FALSE}
 library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+flooding_probability <- read_csv("Probability of flooding.csv")
 ```
 
 
@@ -265,4 +269,23 @@ storm_surge3_lowprop <- round(prop.table(as.matrix(storm_surge3_lowflood), 1), 3
 
 #there is a 6.8% chance of flooding under these conditions
 ```
+
+```{r}
+#Create table of probability of flooding
+
+flood_probability_select <- flooding_probability %>%
+  select(-conditions) #created a data frame without the column conditions
+
+rownames(flood_probability_select) <- c("Normal Conditions", "Storm Surge 1m", "Storm Surge 2m", "Storm Surge 3m") #set the row names in the data frame as what the conditions were
+
+flood_probability_table <- kable(flood_probability_select,
+                                 col.names = c("Low Tide", "Mid Tide", "High Tide"),
+                                 caption = "Table 1. Risk of Flooding in New York at Low, Mid and High Tide, Under Normal Conditions and Storm Surges of 1m, 2m, and 3m"
+                                  ) %>%
+  kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
+
+flood_probability_table
+
+```
+
 
