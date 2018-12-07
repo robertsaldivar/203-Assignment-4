@@ -65,38 +65,204 @@ Flood_Prop <- round(prop.table(as.matrix(tide_range_flood), 1), 3) #Creates a pr
 ```
 
 ```{r}
-# Counting the amount of floods and proportions with a storm surge of 1m
+# Counting the amount of floods and proportion under normal conditions at high tide
 
-storm_surge1 <- tide_range %>%
-  mutate(Flood = ifelse(tide_range > 6.5, "Flood", "No Flood")) %>%
+tide_range_high <- rnorm(10000, mean = 5, sd = 3) %>%
+  as.data.frame
+
+colnames(tide_range_high) <- c("tide_range_high")
+
+tide_range_flood_high <- tide_range_high %>%
+  mutate(Flood = ifelse(tide_range_high > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n) # Creating a count of the number of time that the water is high enough to flood assuming over 7.5 m causes a significant flood.
+
+Flood_Prop_high <- round(prop.table(as.matrix(tide_range_flood_high), 1), 3) #Creates a proportion table of the number of floods vs the number of no floods
+
+#The Risk of flood under normal conditions at high tide is 19.8%
+
+```
+
+```{r}
+# Counting the amount of floods and proportion under normal conditions at low tide
+
+tide_range_low <- rnorm(10000, mean = 0, sd = 3) %>%
+  as.data.frame
+
+colnames(tide_range_low) <- c("tide_range_low")
+
+tide_range_flood_low <- tide_range_low %>%
+  mutate(Flood = ifelse(tide_range_low > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n) # Creating a count of the number of time that the water is high enough to flood assuming over 7.5 m causes a significant flood.
+
+Flood_Prop_low <- round(prop.table(as.matrix(tide_range_flood_low), 1), 3) #Creates a proportion table of the number of floods vs the number of no floods
+
+#The Risk of flood under normal conditions at low tide is 0.6%
+```
+
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 1m in the middle of high and low tide
+
+storm_surge1_0 <- rnorm(10000, mean = 3.5, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge1_0) <- c("storm_surge1_0")
+
+storm_surge1_0flood <- storm_surge1_0 %>%
+  mutate(Flood = ifelse(storm_surge1_0 > 7.5, "Flood", "No Flood")) %>%
   count(Flood, Flood) %>%
   spread(Flood, n)
 
-storm_surge1_prop <- round(prop.table(as.matrix(storm_surge1), 1), 3)
+storm_surge1_0prop <- round(prop.table(as.matrix(storm_surge1_0flood), 1), 3)
 
+#there is a 8.7% chance of flooding under these conditions
+
+```
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 1m at high tide
+
+storm_surge1_high <- rnorm(10000, mean = 6, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge1_high) <- c("storm_surge1_high")
+
+storm_surge1_highflood <- storm_surge1_high %>%
+  mutate(Flood = ifelse(storm_surge1_high > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge1_highprop <- round(prop.table(as.matrix(storm_surge1_highflood), 1), 3)
+
+#there is a 30.9 percent chance of flooding under these conditions
+```
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 1m at low tide
+
+storm_surge1_low <- rnorm(10000, mean = 1, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge1_low) <- c("storm_surge1_low")
+
+storm_surge1_lowflood <- storm_surge1_low %>%
+  mutate(Flood = ifelse(storm_surge1_low > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge1_lowprop <- round(prop.table(as.matrix(storm_surge1_lowflood), 1), 3)
+
+#there is a 1.6% chance of flooding under these conditions
 ```
 
 ```{r}
 # Counting the amount of floods and proportions with a storm surge of 2m
 
-storm_surge2 <- tide_range %>%
-  mutate(Flood = ifelse(tide_range > 5.5, "Flood", "No Flood")) %>%
+storm_surge2_0 <- rnorm(10000, mean = 4.5, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge2_0) <- c("storm_surge2_0")
+
+storm_surge2_0flood <- storm_surge2_0 %>%
+  mutate(Flood = ifelse(storm_surge2_0 > 7.5, "Flood", "No Flood")) %>%
   count(Flood, Flood) %>%
   spread(Flood, n)
 
-storm_surge2_prop <- round(prop.table(as.matrix(storm_surge2), 1), 3)
+storm_surge2_0prop <- round(prop.table(as.matrix(storm_surge2_0flood), 1), 3)
 
+#there is a 15.4% chance of flooding under these conditions
 ```
 
 ```{r}
-# Counting the amount of floods and proportions with a storm surge of 3m
+# Counting the amount of floods and proportions with a storm surge of 2m at high tide
 
-storm_surge3 <- tide_range %>%
-  mutate(Flood = ifelse(tide_range > 4.5, "Flood", "No Flood")) %>%
+storm_surge2_high <- rnorm(10000, mean = 7, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge2_high) <- c("storm_surge2_high")
+
+storm_surge2_highflood <- storm_surge2_high %>%
+  mutate(Flood = ifelse(storm_surge2_high > 7.5, "Flood", "No Flood")) %>%
   count(Flood, Flood) %>%
   spread(Flood, n)
 
-storm_surge3_prop <- round(prop.table(as.matrix(storm_surge3), 1), 3)
+storm_surge2_highprop <- round(prop.table(as.matrix(storm_surge2_highflood), 1), 3)
 
+#there is a 43.1% chance of flooding under these conditions
+```
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 2m at low tide
+
+storm_surge2_low <- rnorm(10000, mean = 2, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge2_low) <- c("storm_surge2_low")
+
+storm_surge2_lowflood <- storm_surge2_low %>%
+  mutate(Flood = ifelse(storm_surge2_low > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge2_lowprop <- round(prop.table(as.matrix(storm_surge2_lowflood), 1), 3)
+
+#there is a 3.2% chance of flooding under these conditions
+```
+
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 3m between high and low tide
+
+storm_surge3_0 <- rnorm(10000, mean = 5.5, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge3_0) <- c("storm_surge3_0")
+
+storm_surge3_0flood <- storm_surge3_0 %>%
+  mutate(Flood = ifelse(storm_surge3_0 > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge3_0prop <- round(prop.table(as.matrix(storm_surge3_0flood), 1), 3)
+
+#there is a 25% chance of flooding under these conditions
+```
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 3m at high tide
+
+storm_surge3_high <- rnorm(10000, mean = 8, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge3_high) <- c("storm_surge3_high")
+
+storm_surge3_highflood <- storm_surge3_high %>%
+  mutate(Flood = ifelse(storm_surge3_high > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge3_highprop <- round(prop.table(as.matrix(storm_surge3_highflood), 1), 3)
+
+#there is a 57.2% chance of flooding under these conditions
+```
+
+```{r}
+# Counting the amount of floods and proportions with a storm surge of 2m at low tide
+
+storm_surge3_low <- rnorm(10000, mean = 3, sd = 3) %>%
+  as.data.frame
+
+colnames(storm_surge3_low) <- c("storm_surge3_low")
+
+storm_surge3_lowflood <- storm_surge3_low %>%
+  mutate(Flood = ifelse(storm_surge3_low > 7.5, "Flood", "No Flood")) %>%
+  count(Flood, Flood) %>%
+  spread(Flood, n)
+
+storm_surge3_lowprop <- round(prop.table(as.matrix(storm_surge3_lowflood), 1), 3)
+
+#there is a 6.8% chance of flooding under these conditions
 ```
 
